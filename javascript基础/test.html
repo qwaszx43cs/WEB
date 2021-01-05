@@ -9,14 +9,17 @@
 
 <body>
   <script>
-    foo();
+    function fn1() {
+      let a = 1;
 
-    function foo() {
-      if (false) {
-        var i = 123;
+      function fn2() {
+        console.log(a);
       }
-      console.log(i);
+
+      fn2();
     }
+
+    fn1(); //1
   </script>
 </body>
 
