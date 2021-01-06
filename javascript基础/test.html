@@ -9,17 +9,37 @@
 
 <body>
   <script>
-    function fn1() {
-      let a = 1;
-
-      function fn2() {
-        console.log(a);
+    const obj = {
+      name: 'sky',
+      age: 20,
+      interests: ['football', 'basketball'],
+      info: {
+        desc: 'hello world',
+        author: 'violet'
       }
+    };
 
-      fn2();
+    const obj2 = {};
+    deepCopy(obj2, obj);
+    obj.info.desc = 'nonono';
+    console.log(obj2.info.desc); //hello world
+
+    function deepCopy(newObj, oldObj) {
+      for (let key in oldObj) {
+        let item = oldObj[key];
+        // 判断是否为数组
+        if (item instanceof Array) {
+          newObj[key] = [];
+          deepCopy(newObj[key], item);
+        } else if (item instanceof Object) {
+          newObj[key] = {};
+          deepCopy(newObj[key], item);
+        } else {
+          newObj[key] = item;
+        }
+      }
+      return newObj;
     }
-
-    fn1(); //1
   </script>
 </body>
 
