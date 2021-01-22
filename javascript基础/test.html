@@ -1,39 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
-  <style>
-    .box1 {
-      height: 300px;
-      background-color: green;
-      position: relative;
-    }
-
-    .box2 {
-      height: 50px;
-      width: 100px;
-      background-color: azure;
-      border: 2px solid #000;
-      position: absolute;
-      top: 30px;
-      left: 20px;
-    }
-  </style>
-
-  <div class="box1">
-    <button id="toLeft">移动至靠左200px</button>
-    <button id="toRight">移动到靠左400px</button>
-    <div class="box2"></div>
-  </div>
+  <ul class="parent-list">
+    <li><a href="#" class="getTitle">red</a></li>
+    <li><a href="#" class="getTitle">green</a></li>
+    <li><a href="#" class="getTitle">blue</a></li>
+  </ul>
 
   <script>
-    var myBox = document.getElementsByClassName('.box2')[0];
-    var leftBtn = document.getElementById('toLeft');
-    var rightBtn = document.getElementById('toRight');
+    window.onload = function () {
+      document.getElementsByTagName('ul')[0].addEventListener('click', function (event) {
+        if (event.target && event.target.className == 'getTitle') {
+          event.target.style = 'color:' + event.target.innerText;
+        }
+      }, false); // false设置为事件捕捉
+    };
   </script>
 </body>
+
 </html>
