@@ -8,19 +8,53 @@
 </head>
 
 <body>
-  <ul class="parent-list">
-    <li><a href="#" class="getTitle">red</a></li>
-    <li><a href="#" class="getTitle">green</a></li>
-    <li><a href="#" class="getTitle">blue</a></li>
-  </ul>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .w {
+      width: 60%;
+      height: 100vh;
+      background-color: lightgray;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .adv {
+      height: 100px;
+      width: 50px;
+      background-color: lightskyblue;
+    }
+
+    .adv-left {
+      position: absolute;
+      left: -50px;
+    }
+
+    .adv-right {
+      position: absolute;
+      right: -50px;
+    }
+  </style>
+
+  <div class="w">
+    <div class="adv adv-left"></div>
+    <div class="adv adv-right"></div>
+  </div>
 
   <script>
+    // 获取广告条DOM元素
     window.onload = function () {
-      document.getElementsByTagName('ul')[0].addEventListener('click', function (event) {
-        if (event.target && event.target.className == 'getTitle') {
-          event.target.style = 'color:' + event.target.innerText;
+      var adv = document.getElementsByClassName('adv');
+
+      setTimeout(() => {
+        for (let v of adv) {
+          // 设置元素display样式none
+          v.style.display = 'none';
         }
-      }, false); // false设置为事件捕捉
+      }, 2000);
     };
   </script>
 </body>
