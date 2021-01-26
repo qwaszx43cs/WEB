@@ -8,54 +8,23 @@
 </head>
 
 <body>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-
-    .w {
-      width: 60%;
-      height: 100vh;
-      background-color: lightgray;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .adv {
-      height: 100px;
-      width: 50px;
-      background-color: lightskyblue;
-    }
-
-    .adv-left {
-      position: absolute;
-      left: -50px;
-    }
-
-    .adv-right {
-      position: absolute;
-      right: -50px;
-    }
-  </style>
-
-  <div class="w">
-    <div class="adv adv-left"></div>
-    <div class="adv adv-right"></div>
-  </div>
-
   <script>
-    // 获取广告条DOM元素
-    window.onload = function () {
-      var adv = document.getElementsByClassName('adv');
-
-      setTimeout(() => {
-        for (let v of adv) {
-          // 设置元素display样式none
-          v.style.display = 'none';
-        }
-      }, 2000);
+    const obj = {
+      firstName: 'sky',
+      lastName: 'shi',
+      get fullName() {
+        return this.firstName + '-' + this.lastName;
+      },
+      set fullName(data) {
+        var name = data.split('-');
+        this.firstName = name[0];
+        this.lastName = name[0];
+      }
     };
+
+    console.log(obj.fullName);
+    obj.firstName = 'violet';
+    console.log(obj.fullName);
   </script>
 </body>
 
