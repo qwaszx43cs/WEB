@@ -9,22 +9,11 @@
 
 <body>
   <script>
-    const obj = {
-      firstName: 'sky',
-      lastName: 'shi',
-      get fullName() {
-        return this.firstName + '-' + this.lastName;
-      },
-      set fullName(data) {
-        var name = data.split('-');
-        this.firstName = name[0];
-        this.lastName = name[0];
-      }
-    };
+    let fn = (a, b = 1, c = 1) => {
+      console.log(a + b + c);
+    }
 
-    console.log(obj.fullName);
-    obj.firstName = 'violet';
-    console.log(obj.fullName);
+    fn(1);
   </script>
 </body>
 
