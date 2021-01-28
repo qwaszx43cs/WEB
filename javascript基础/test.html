@@ -9,11 +9,13 @@
 
 <body>
   <script>
-    let fn = (a, b = 1, c = 1) => {
-      console.log(a + b + c);
-    }
+    let obj1 = {
+      name: 'sky'
+    };
+    let obj2 = {};
 
-    fn(1);
+    obj2 = Object.create(obj1);
+    console.log(obj2.__proto__ == obj1);
   </script>
 </body>
 
