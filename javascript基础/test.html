@@ -9,13 +9,11 @@
 
 <body>
   <script>
-    let obj1 = {
-      name: 'sky'
-    };
-    let obj2 = {};
-
-    obj2 = Object.create(obj1);
-    console.log(obj2.__proto__ == obj1);
+    const res = await this.$http.get(url);
+    let {
+      status,
+      data
+    } = res;
   </script>
 </body>
 
