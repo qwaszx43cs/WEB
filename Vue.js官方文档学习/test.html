@@ -1,33 +1,41 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="vue.js"></script>
 </head>
 
 <body>
-    <div id ="app">
-        <div :class="myClass"></div>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <div id="app" v-cloak>
+        <template v-if="loginType">
+            <label for="email">邮箱登录</label>
+            <input type="text" name="email" id="email" key="emailLogin">
+        </template>
+        <template v-else>
+            <label for="account">账户登录</label>
+            <input type="text" name="account" id="account" key="accountLogin">
+        </template>
+        <br />
+        <button @click="transfer">切换登录</button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="../vue.js"></script>
     <script>
         var vm = new Vue({
             el: '#app',
             data: {
-                isActive: true,
-                error: null
+                loginType: true
             },
-            computed: {
-                myClass: function() {
-                    return {
-                        active: this.isActive && !this.error;
-                        'text-danger': this.error && this.error.type === 'fatal';
-                    }
+            methods: {
+                transfer() {
+                    this.loginType = !(this.loginType);
                 }
             }
         });
