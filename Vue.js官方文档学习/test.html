@@ -8,36 +8,17 @@
 </head>
 
 <body>
-    <style>
-        [v-cloak] {
-            display: none;
-        }
-    </style>
-    <div id="app" v-cloak>
-        <template v-if="loginType">
-            <label for="email">邮箱登录</label>
-            <input type="text" name="email" id="email" key="emailLogin">
-        </template>
-        <template v-else>
-            <label for="account">账户登录</label>
-            <input type="text" name="account" id="account" key="accountLogin">
-        </template>
-        <br />
-        <button @click="transfer">切换登录</button>
+    <div id="app">
     </div>
 
     <script src="../vue.js"></script>
     <script>
+        // 
+        Vue.component('todo-item', {
+            template: '<li>{{ title }} <button @click="$emit"></li>'
+        })
         var vm = new Vue({
-            el: '#app',
-            data: {
-                loginType: true
-            },
-            methods: {
-                transfer() {
-                    this.loginType = !(this.loginType);
-                }
-            }
+            el: '#app'
         });
     </script>
 </body>
