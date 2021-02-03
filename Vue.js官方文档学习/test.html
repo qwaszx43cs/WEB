@@ -9,16 +9,65 @@
 
 <body>
     <div id="app">
+        <!-- 文本 -->
+        <div class="text">
+            <label for="text">文本框</label>
+            <p>{{ msg }}</p>
+            <input id="text" type="text" v-model="msg">
+        </div>
+
+        <!-- 多行文本 -->
+        <div class="textarea">
+            <label for="textarea">多行文本</label>
+            <p>{{ textareaMsg }}</p>
+            <textarea name="" id="textarea" cols="30" rows="10" v-model="textareaMsg"></textarea>
+        </div>
+
+        <!-- 复选框 -->
+        <div class="checkbox">
+            <label for="checkbox">复选框</label>
+            <p>{{ checkbox }}</p>
+            <input type="checkbox" name="" id="checkbox" v-model="checkbox">
+        </div>
+
+        <!-- 单选按钮 -->
+        <div class="radio">
+            <label for="radio">单选按钮</label>
+            <p>{{ radio }}</p>
+            <input type="radio" name="" id="radio" v-model="radio" value="1">1
+            <input type="radio" name="" id="radio" v-model="radio" value="2">2
+        </div>
+
+        <!-- 选择框 -->
+        <!-- 多选时绑定数组 -->
+        <div class="select">
+            <label for="select">选择框</label>
+            <p>{{ select }}</p>
+            <!-- v-for动态渲染列表 -->
+            <select name="" id="select" multiple v-model="select">
+                <option v-for="(item) in selectList" :value="item.value">{{item.text}}</option>
+            </select>
+        </div>
     </div>
 
     <script src="../vue.js"></script>
     <script>
-        // 
-        Vue.component('todo-item', {
-            template: '<li>{{ title }} <button @click="$emit"></li>'
-        })
         var vm = new Vue({
-            el: '#app'
+            el: '#app',
+            data: {
+                msg: '',
+                "textareaMsg": "",
+                checkbox: '',
+                radio: '',
+                selectList: [{
+                    value: 1,
+                    text: 1
+                }, {
+                    value: 2,
+                    text: 2
+                }],
+                select: []
+            },
         });
     </script>
 </body>
