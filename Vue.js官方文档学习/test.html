@@ -1,74 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
 
 <body>
-    <div id="app">
-        <!-- 文本 -->
-        <div class="text">
-            <label for="text">文本框</label>
-            <p>{{ msg }}</p>
-            <input id="text" type="text" v-model="msg">
-        </div>
-
-        <!-- 多行文本 -->
-        <div class="textarea">
-            <label for="textarea">多行文本</label>
-            <p>{{ textareaMsg }}</p>
-            <textarea name="" id="textarea" cols="30" rows="10" v-model="textareaMsg"></textarea>
-        </div>
-
-        <!-- 复选框 -->
-        <div class="checkbox">
-            <label for="checkbox">复选框</label>
-            <p>{{ checkbox }}</p>
-            <input type="checkbox" name="" id="checkbox" v-model="checkbox">
-        </div>
-
-        <!-- 单选按钮 -->
-        <div class="radio">
-            <label for="radio">单选按钮</label>
-            <p>{{ radio }}</p>
-            <input type="radio" name="" id="radio" v-model="radio" value="1">1
-            <input type="radio" name="" id="radio" v-model="radio" value="2">2
-        </div>
-
-        <!-- 选择框 -->
-        <!-- 多选时绑定数组 -->
-        <div class="select">
-            <label for="select">选择框</label>
-            <p>{{ select }}</p>
-            <!-- v-for动态渲染列表 -->
-            <select name="" id="select" multiple v-model="select">
-                <option v-for="(item) in selectList" :value="item.value">{{item.text}}</option>
-            </select>
-        </div>
+    <div id ="app">
+        <component-b></component-b>
     </div>
 
     <script src="../vue.js"></script>
     <script>
+        // 全局组件
+        Vue.component('component-a', {
+            template: '<span>this is component a</span>'
+        })
+
         var vm = new Vue({
             el: '#app',
-            data: {
-                msg: '',
-                "textareaMsg": "",
-                checkbox: '',
-                radio: '',
-                selectList: [{
-                    value: 1,
-                    text: 1
-                }, {
-                    value: 2,
-                    text: 2
-                }],
-                select: []
-            },
+            data: {},
+            methods: {},
+            components: {
+                'component-b': {
+                    template: `
+                    <div>
+                    this is component b and <component-a></component-a>
+                    </div>
+                    `
+                }
+            }
         });
+
     </script>
 </body>
 
