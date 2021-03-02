@@ -8,8 +8,9 @@
 </head>
 <body>
   <script>
-    let arr = [1, 2, 3, 4];
-    console.log(Math.max.apply(null,arr));
+    let arr = [1, 4, 24, 2, 55, 0];
+    arr.sort((a, b) => a < b); // bad
+    arr.sort((a, b) => a - b); // good
   </script>
 </body>
 </html>

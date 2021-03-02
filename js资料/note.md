@@ -210,7 +210,7 @@ let obj4 = createPerson('sky');
 
 ### 1.8.1 常见的高阶函数
 
-1. map
+1. map()
 
 `map`方法将数组所有成员依次传入函数参数，然后把每一次执行的结果组成一个新数组返回
 
@@ -239,5 +239,101 @@ map返回的是一个新数组，原数组没有变化
   });
 
   console.log(arr2); // [1, 4, 9, 16]
+
+```
+
+
+2. reduce(), reduceRight()
+
+依次处理数组每个成员，最终累计成一个值。他们的差别是`reduce()`是从左到右处理，`reduceRight()`是从右到左处理。
+
+这两种方法的第一个参数都是一个函数，该函数接受四种参数
+
+  1） 累计变量，默认为数组第一个成员
+
+  2） 当前变量，默认为数组第二个成员
+
+  3） 当前位置，从0开始
+
+  4） 原数组
+
+如果要改变初始累计值，可以给`reduce()`和`reduceRight()`传递第二个参数
+
+```javascript
+
+  let arr = [1, 2, 3, 4];
+  let total = arr.reduce((a, b) => {
+    return a * b;
+  }, 10); // 设置初始累计值为10
+
+  console.log(total); // 10 * 1 * 2 * 3 * 4 = 240
+
+```
+
+3. filter()
+
+`filter()`方法过滤数组，满足条件的成员组组成一个新数组返回。 `filter`方法参数是一个函数，该函数接受三个参数 1）当前成员 2）成员位置 3）当前数组
+
+```javascript
+
+  let arr = [1, 2, 3, 4];
+  let arr2 = arr.filter((elem, index, array) => {
+    return elem > 3;
+  });
+  console.log(arr2); // [ 4 ]
+
+```
+
+4. sort()
+
+`sort()`方法对数组进行排序，默认是按照**字典顺序**排序。**排序后，原数组将被更改**
+
+```javascript
+
+  let arr1 = ['a', 'c', 'o', 'm'];
+  let arr2 = [11, 101];
+  let arr3 = [10111, 1101, 111];
+
+  arr1.sort();
+  arr2.sort();
+  arr3.sort();
+  console.log(arr1); // [ "a", "c", "m", "o" ]
+  console.log(arr2); // [ 101, 11 ] 数值先被转换为字符串，再按照字典顺序进行比较
+  console.log(arr3); // [ 10111, 1101, 111 ]
+
+```
+
+如果想让数组成员按照自定义规则排序，则传入一个函数作为参数。
+
+参数函数本身可以传入两个参数，表示进行比较的两个数组成员。
+
+```javascript
+
+  let friends = [
+    {name : 'child1', age: 12},
+    {name : 'child2', age: 15},
+    {name : 'child3', age: 9}
+  ];
+
+  friends.sort((a, b) => {
+    return a.age - b.age;
+  })
+
+  console.log(friends);
+//     0: Object { name: "child3", age: 9 }
+// ​
+//     1: Object { name: "child1", age: 12 }
+// ​
+//     2: Object { name: "child2", age: 15 } 
+
+```
+
+注意，自定义的排序函数应该返回数值，否则不同浏览器有不同的实现
+
+```javascript
+
+  let arr = [1, 4, 24, 2, 55, 0];
+  arr.sort((a, b) => a < b); // bad
+  arr.sort((a, b) => a - b); // good
 
 ```
