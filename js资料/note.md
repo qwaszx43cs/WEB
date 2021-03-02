@@ -103,6 +103,141 @@ let obj4 = createPerson('sky');
 ### 1.6.4 new运算符
 
 
-## 1.7 继承的方式
+## 1.7 继承的方式（重要！！）
+
+1. 构造函数继承
+
+```javascript
+
+  function Parent(name) {
+    this.name = name || 'Maggie';
+  }
+
+  Parent.prototype.sayHello = function() {
+    console.log(123);
+  }
+
+  function Child(name) {
+    Parent.call(this);
+    this.name = name;
+  }
+
+  let sky = new Child('tianyu');
+  console.log(sky.name);
+
+```
+
+缺点：不能继承父类的原型。 在父类原型中做修改，字类无法继承。
 
 
+2. 原型链继承
+
+```javascript
+    function Parent(name) {
+      this.name = name || 'zhang';
+      this.age = 30;
+      this.interests =  ['basketball', 'football'];
+    }
+
+    Parent.prototype.say = function() {
+      console.log(13);
+    };
+
+    function Child(gender) {
+      this.gender = gender;
+    }
+
+    Child.prototype = new Parent(); // 重要
+    let sky = new Child();
+    let violet = new Child();
+    sky.age = 25;
+    console.log(sky.age); // 25
+    console.log(violet.age); // 30
+
+    sky.interests.pop();
+    console.log(sky.interests); // ['basketball']
+    console.log(violet.interests); // ['basketball']
+
+```
+
+将父类实例赋值给子类原型，这样子类继承父类原型
+
+缺点: 无法实现多继承; 如果child1实例修改父类中的属性，会影响child2（其他子类实例）的属性
+
+原因： 子类共用原型，即`sky.__proto__ === violet.__proto__`
+
+3. 组合继承 （原型链+构造函数继承）
+
+解决了上述两种的问题，但是会让父类的构造方法执行两遍
+
+```javascript
+
+  function Parent(name) {
+    this.name = name || 'zhang';
+    this.age = 30;
+    this.interests =  ['basketball', 'football'];
+  }
+
+  function Child() {
+    Parent.call(this); // 重要1： 执行了Parent构造方法
+  }
+
+  Child.prototype = new Parent(); // 重要2：又重复执行了Parent构造方法
+
+```
+
+## 1.8 高阶函数
+
+函数的参数是函数或返回函数
+
+代码示例： 
+
+```javascript
+
+  function fn(a, b, callback) {
+    console.log(a + b);
+    callback&&callback(); //执行完console.log()语句再执行callback函数
+  }
+
+  function test() {
+    console.log('1234');
+  }
+
+  fn(1,2); // 3
+  fn(1,2, test); // 3 1234
+
+```
+
+### 1.8.1 常见的高阶函数
+
+1. map
+
+`map`方法将数组所有成员依次传入函数参数，然后把每一次执行的结果组成一个新数组返回
+
+代码示例
+
+```javascript
+
+  const arr = [1, 2, 3, 4];
+  const arr2 = arr.map((n) => {
+    return n + 2;
+  });
+  console.log(arr2); // [3, 4, 5, 6]
+  console.log(arr); // [1, 2, 3, 4]
+
+```
+
+map返回的是一个新数组，原数组没有变化
+
+`map`方法接收一个函数作为参数，参数函数可以传入三个参数：当前成员，当前成员位置，数组本身
+
+```javascript
+
+  const arr = [1, 2, 3, 4];
+  const arr2 = arr.map((elem, index, arr) => {
+    return elem *= index;
+  });
+
+  console.log(arr2); // [1, 4, 9, 16]
+
+```
