@@ -102,6 +102,19 @@ let obj4 = createPerson('sky');
 
 ### 1.6.4 new运算符
 
+```javascript
+
+  function _new2(/*构造函数*/_constructor, /*构造函数参数*/...args) {
+    // 创建一个空对象，继承构造函数的原型对象
+    var o = Object.create(_constructor.prototype); 
+    // 执行构造函数
+    var result = _constructor.call(o, ...args); 
+    // 判断是否是对象，是返回结果，不是返回构造函数的执行结果
+    return result && result === 'Object' ? result : o; 
+  }
+
+```
+
 
 ## 1.7 继承的方式（重要！！）
 
@@ -337,3 +350,297 @@ map返回的是一个新数组，原数组没有变化
   arr.sort((a, b) => a - b); // good
 
 ```
+
+## 2.1 对象的声明方式
+
+```javascript
+
+  // 1.字面量声明
+  const obj1 = {a: 1}; // {a: 1}
+
+  // 2.构造函数声明
+  const obj2 = new Object({a: 1}); // {a: 1}
+
+  // 3.Object.create()
+  const obj3 = Object.create({a: 1}); // {}
+
+```
+
+### 2.1.4 三种方法的特点
+
+1. 功能：都能实现对象的声明，并能够赋值和取值
+
+2. 继承性：`Object.create`创建的对象继承到了`__proto__`属性上
+
+3. 隐藏属性: 三种方式创建的对象都会为每个成员(属性或方法)生成一些隐藏属性
+
+4. 属性读取: `ObjectGetOwnPropertyDescriptor()`或`GetOwnPropertyDescriptor()`
+
+5. 属性设置: `Object.definePropertype`或`Object.defineProperties`
+
+
+## 2.2 对象的属性
+
+
+## 2.3 Symbol
+
+
+## 2.4 遍历
+
+### 2.4.1 一级对象遍历方法
+
+- `for...in`方法 -> 遍历对象自身和继承的可遍历属性
+
+- `Object.keys(obj)` -> 返回一个数组，包含自身（不包括继承）的可枚举属性
+
+```javascript
+
+  let obj1 = {
+    name: 'obj1',
+    author: 'sky'
+  }
+
+  console.log(Object.keys(obj1)); // ['name', 'author']
+
+```
+
+- `Object.getOwnPropertyNames(obj)` -> 返回一个数组，包括自身的所有可枚举属性
+
+### 2.4.2 多级对象遍历
+
+递归实现
+
+```javascript
+
+  let treeNodes = [
+    {
+      id: 1,
+      name: '1',
+      children: [
+        {
+          id: 11,
+          name: '11',
+          children: [
+            {
+              id: 111,
+              name: '111'
+            }
+          ]
+        }, 
+        {
+          id: 12,
+          name: '12'
+        }
+      ]
+    }, 
+    {
+      id: 2,
+      name: '2',
+      children: [
+        {
+          id: 21,
+          name: '21',
+          children: []
+        }
+      ]
+    }
+  ]
+
+  let parseTreeJson = function(treeNodes) {
+    if (!treeNodes || !treeNodes.length) return;
+
+    for(let i = 0; i < treeNodes.length; i++) {
+      let childs = treeNodes[i].children;
+
+      console.log(treeNodes[i].id);
+
+      if(childs && childs.length > 0 ) {
+        parseTreeJson(childs);
+      }
+    }
+  }
+
+  parseTreeJson(treeNodes);
+
+```
+
+
+## 2.5 深度拷贝
+
+### 2.5.1 Object.assign
+
+`Object.assign`将对象的可枚举属性，复制到目标对象
+
+语法:` Object.assign(目标对象, 源对象1, 源对象2...);`
+
+代码示例:
+
+```javascript
+
+  let obj = {};
+  let obj1 = { name: 'sky', gender: 'male' };
+  let obj2 = { name: 'alice', age: 20 };
+
+  Object.assign(obj, obj1, obj2); // 将obj1, obj2对象属性追加到obj中
+  console.log(JSON.stringify(obj)); // {name: 'alice', gender: 'male', age: 20};
+
+```
+
+`JSON.stringfy`将对象转化为字符串
+
+注意: *这是浅拷贝，只拷贝第一层对象*
+
+### 2.5.2 深拷贝 
+
+递归拷贝
+
+
+## 2.6 数据拦截
+
+-----暂时跳过-----
+
+# 3. 数组
+
+数组的考察基本是对数组方法多一点
+
+## 3.1 扁平化N维数组
+
+Array.flat(depth)方法会按照一个可指定的深度递归遍历数组，并将所有元素与遍历到的子数组中的元素合并为一个新数组返回, depth默认值为1
+
+
+## 3.2 数组去重
+
+`Set`是ES6新增加的数据结构，它**类似于数组**，但是成员都是唯一的，没有重复的值
+
+```javascript
+
+    const arr = [1, 4, 4, 2, 2, 3, 3, 4];
+    const s = new Set(arr);
+    console.log(s); // [ 1, 4, 2, 3 ]
+    console.log(s.size) // size属性提供Set类型的长度
+
+```
+
+`Array.from`方法是ES6新增的数组方法，用于将两类对象转化为真正的数组：类数组对象和可遍历的对象(包括ES6新增的Set对象和Map对象)
+
+```javascript
+
+  function fn() {
+    return Array.from(arguments);
+  }
+
+  console.log(fn(1,2,3)); // [1, 2, 3]
+
+```
+
+**数组去重**
+
+代码示例:
+
+```javascript
+
+  let arr = [1, 10, 23, 10, 'abc', 'abc'];
+  const s = new Set(arr); // 使用Set数据类型给数组去重
+  arr = Array.from(s); // 使用Array.from方法把可遍历的对象类型Set转换为数组
+  console.log(arr); // [ 1, 10, 23, "abc" ]
+
+```
+
+## 3.3 排序
+
+### 3.3.1 sort方法
+
+sort是js内置的排序方法，参数是一个函数
+
+```javascript
+
+  const arr = [1, 20, 8, 5];
+  arr.sort((a, b) => a - b); // 升序  [ 1, 5, 8, 20 ]
+  arr.sort((a, b) => b - a); // 降序  [ 20, 8, 5, 1 ]
+
+```
+
+### 3.3.2 冒泡排序&选择排序
+
+冒泡排序： 左右两个成员比大小，大的放后面
+
+```javascript
+
+  Array.prototype.bubleSort = function() {
+    let arr = this;
+    let len = arr.length;
+    for (let i = 0; i < len - 1; i++) {
+      for (let j = 0; j < len - 1 - i; j++) {
+        if (arr[j] > arr[j+1]) {
+          [arr[j], arr[j+1]] = [arr[j+1], arr[j]]; // 数组解构赋值
+        }
+      }
+    }
+    return arr;
+  }
+
+```
+
+选择排序：从第一个位置开始比较，找出最小的和第一个位置互换，继续下一轮
+
+```javascript
+
+  Array.prototype.selectSort = function() {
+    let arr = this;
+    let len = arr.length;
+    for (let i = 0; i < len - 1; i++) {
+      for (let j = i + 1; j < len; j++) {
+        if (arr[i] > arr[j]) {
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+      }
+    }
+    return arr;  
+  }
+
+```
+
+## 3.4 求数组最大值
+
+`Math.max()`返回两个参数中较大值的那个
+
+1. Math.max()与apply()结合
+
+```javascript
+
+  const arr = [1, 0.2, 20, 14];
+  console.log(Math.max.apply(null, arr));
+
+```
+
+2. 数组reduce()方法
+
+```javascript
+
+  let max = arr.reduce((a, b) => {
+    return Math.max(a, b);
+  });
+  console.log(max); // 20
+
+```
+
+
+## 3.5 数组求和
+
+1. Array.reduce()
+
+```javascript
+
+  const arr = [1, 0.2, 20, 14];
+  let sum = arr.reduce((pre, next) => {
+    return pre + next;
+  });
+  console.log(sum); // 35.2
+
+```
+
+## 3.6 数组合并
+
+1. concat() 
+
+`concat()`方法用于多个数组的合并。它将新数组的成员添加到原数组的后部，然后返回一个新数组，原数组不会改变

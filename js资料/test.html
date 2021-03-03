@@ -8,9 +8,11 @@
 </head>
 <body>
   <script>
-    let arr = [1, 4, 24, 2, 55, 0];
-    arr.sort((a, b) => a < b); // bad
-    arr.sort((a, b) => a - b); // good
+    const arr = [1, 0.2, 20, 14];
+    let sum = arr.reduce((pre, next) => {
+      return pre + next;
+    });
+    console.log(sum); // 35.2
   </script>
 </body>
 </html>
