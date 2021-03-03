@@ -8,11 +8,13 @@
 </head>
 <body>
   <script>
-    const arr = [1, 0.2, 20, 14];
-    let sum = arr.reduce((pre, next) => {
-      return pre + next;
-    });
-    console.log(sum); // 35.2
+    const obj = {
+      name: 'sky',
+      age: 12
+    }
+
+    let arr = Object.keys(obj);
+    console.log(arr); // [ "name", "age" ]
   </script>
 </body>
 </html>

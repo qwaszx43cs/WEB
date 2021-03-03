@@ -643,4 +643,110 @@ sort是js内置的排序方法，参数是一个函数
 
 1. concat() 
 
-`concat()`方法用于多个数组的合并。它将新数组的成员添加到原数组的后部，然后返回一个新数组，原数组不会改变
+`concat()`方法用于多个数组的合并。它将新数组的成员添加到原数组之后，然后返回一个新数组，原数组不会改变
+
+```javascript
+
+  const arr1 = [1, 2, 'a', 200];
+  const arr2 = [222, 333];
+  const arr3 = arr1.concat(arr2);
+  console.log(arr3); // [ 1, 2, "a", 200, 222, 333 ]
+  console.log(arr1); // [ 1, 2, "a", 200 ] 原数组不会改变
+
+```
+
+2. Array.prototype.push.apply()
+
+```javascript
+
+  const arr1 = [1, 2, 'a', 200];
+  const arr2 = [222, 333];
+  Array.prototype.push.apply(arr1, arr2);
+  console.log(arr1); // [ 1, 2, "a", 200, 222, 333 ]
+
+```
+
+## 3.7 判断数组是否包含某个值
+
+```javascript
+
+  const arr1 = [1, 2, 'a', 200];
+  arr1.includes(4); // false
+  arr1.indexOf(4); // -1， 如果存在返回索引
+
+```
+includes(), find(), findIndex()是ES6的api
+
+
+## 3.8 类数组转换
+
+`slice()`方法用于提取数组的一部分，返回一个新数组。接收两个参数，表示起始和终止位置。
+
+```javascript
+
+Array.prototype.slice.call(null, arguments);
+Array.prototype.slice.apply(null, arguments);
+Array.from(arguments); // ES6 api
+
+```
+
+## 3.9 每一项设置值
+
+`fill`方法使用给定值，填充数组。该方法会填充掉已有的元素。
+
+```javascript
+
+  [1, 2, 3].fill(5); // [ 5, 5, 5 ]
+
+  let arr = new Array(3).fill(8);
+  console.log(arr); // [ 8, 8, 8 ]
+
+```
+
+## 3.10 每一项是否满足
+
+every方法
+
+`[1, 2, 3].every(item => item < 100); // true`
+
+
+## 3.11 某一项满足条件
+
+some方法
+
+`[1, 100, 82].some(item => item < 0); // false`
+
+
+## 3.12 过滤数组 
+
+filter方法
+
+```javascript
+
+  let arr = [1, 2, 'a', 'b'];
+  let arr2 = arr.filter(item => {
+    return typeof item === 'string';
+  })
+  console.log(arr2); // [ "a", "b" ]
+
+```
+
+
+## 3.13 对象和数组转化
+
+1. Object.keys()返回对象可枚举的属性名数组
+
+```javascript
+
+  const obj = {
+    name: 'sky',
+    age: 12
+  }
+
+  let arr = Object.keys(obj);
+  console.log(arr); // [ "name", "age" ]
+
+```
+
+
+# 4. 数据结构篇
