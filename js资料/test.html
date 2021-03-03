@@ -8,13 +8,17 @@
 </head>
 <body>
   <script>
-    const obj = {
-      name: 'sky',
-      age: 12
-    }
+      while (a.__proto__ == null) {
+        if (a.__proto__ == b.prototype) {
+          return true;
+        } 
+        a.__proto__ = a.__proto__.__proto__;
+      }
 
-    let arr = Object.keys(obj);
-    console.log(arr); // [ "name", "age" ]
+      if (a.__proto == null) return false;
+    
+
+
   </script>
 </body>
 </html>
