@@ -7,18 +7,46 @@
   <title>Document</title>
 </head>
 <body>
-  <script>
-      while (a.__proto__ == null) {
-        if (a.__proto__ == b.prototype) {
-          return true;
-        } 
-        a.__proto__ = a.__proto__.__proto__;
+  <script>  
+    let obj1 = {
+      name : 'sky',
+      gender: 'male',
+      car: {
+        brand: 'bmw',
+        price: '',
+        components: {
+          brake: 'ZF',
+          enginee: 'vw'
+        }
       }
+    };
 
-      if (a.__proto == null) return false;
-    
+    function clone(target) {
+      let obj = {};
+      for (let i in target) {
+        obj[i] = target[i];
+      }
+      return obj;
+    } 
 
+    function deepClone(target) {
+      // 判断要拷贝的是对象还是数组
+      const obj = target.constructor === Array ? [] : {};
+      for (let keys in target) {
+        if (target.hasOwnProperty(keys)) {
+          if (target[keys]&& typeof target[keys] === 'object') {
+            obj[keys] = target[keys].constructor === Array ? [] : {};
+            obj[keys] = deepClone(target[keys]);
+          } else {
+            obj[keys] = target[keys];
+          }
+        }
+      }
+      return obj;
+    }
 
+    let obj = deepClone(obj1);
+    console.log(obj);
   </script>
 </body>
 </html>
