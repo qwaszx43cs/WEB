@@ -10,20 +10,10 @@
 
 <body>
   <script>
-    let obj1 = {
-      name: '1',
-      gender: 'male',
-      component: {
-        A: '123'
-      }
-    }
+    let arr1 = [1, 2, 20 ,99 , 9, 1, 31];
+    let arr2 = ['a', 'b', 'c'];
 
-    let obj2 = Object.assign({}, obj1);
-    let obj3 = JSON.parse(JSON.stringify(obj1));
-
-    obj1.component.A = '321';
-    console.log(obj2.component.A); // 321
-    console.log(obj3.component.A); // 123
+    console.log(result); // 163
   </script>
 </body>
 
