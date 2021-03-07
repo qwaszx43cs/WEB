@@ -110,7 +110,7 @@ let obj4 = createPerson('sky');
     // 执行构造函数
     var result = _constructor.call(o, ...args); 
     // 判断是否是对象，是返回结果，不是返回构造函数的执行结果
-    return result && result === 'Object' ? result : o; 
+    return result && result === 'object' ? result : o; 
   }
 
 ```

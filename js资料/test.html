@@ -10,10 +10,27 @@
 
 <body>
   <script>
-    let arr1 = [1, 2, 20 ,99 , 9, 1, 31];
-    let arr2 = ['a', 'b', 'c'];
+  
+    function Person(name) {
+      this.name = name || 'sky';
+    }
 
-    console.log(result); // 163
+    Person.prototype.say = function() {
+      console.log('hello');
+    };
+
+    function Student(height) {
+      Person.call(this);
+      this.height = height;
+    }
+
+    // 使用原型链的方法实现对父类原型的继承
+    Student.prototype = new Person();
+    Student.prototype.constructor = Student;
+
+    let sky = new Student(175);
+    sky.say(); 
+
   </script>
 </body>
 
