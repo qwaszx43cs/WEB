@@ -6,31 +6,34 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script src="../vue.js"></script>
 </head>
 
 <body>
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+
+  <div id="app" v-cloak>
+    <h1 v-text="msg">{{ 1234 }}</h1>
+    <button id="myBtn">123</button>
+  </div>
   <script>
-  
-    function Person(name) {
-      this.name = name || 'sky';
-    }
 
-    Person.prototype.say = function() {
-      console.log('hello');
-    };
+    var vue = new Vue({
+      el: '#app',
+      data: {
+        msg: 'v-text'
+      }
+    })
 
-    function Student(height) {
-      Person.call(this);
-      this.height = height;
-    }
-
-    // 使用原型链的方法实现对父类原型的继承
-    Student.prototype = new Person();
-    Student.prototype.constructor = Student;
-
-    let sky = new Student(175);
-    sky.say(); 
-
+    
+    let myBtn = document.getElementById('myBtn');
+    myBtn.addEventListener('click', () => {
+      alert(123);
+    }, false);
   </script>
 </body>
 
