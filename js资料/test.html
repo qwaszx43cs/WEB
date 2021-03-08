@@ -10,30 +10,28 @@
 </head>
 
 <body>
-  <style>
-    [v-cloak] {
-      display: none;
-    }
-  </style>
 
-  <div id="app" v-cloak>
-    <h1 v-text="msg">{{ 1234 }}</h1>
-    <button id="myBtn">123</button>
+  <div id="app">
+    <ul>
+      <li v-for="(item, index) in arr1">姓名: {{ item.name }}, 年龄： {{ item.age }}</li>
+      <li v-for="a in 15">{{a}}</li>
+    </ul>
   </div>
-  <script>
 
-    var vue = new Vue({
+  <script>
+    var vm = new Vue({
       el: '#app',
-      data: {
-        msg: 'v-text'
+      data() {
+        return {
+          arr: [1, 2, 3],
+          arr1: [
+            { name: 'sky', age: 1},
+            { name: 'sky2', age: 2},
+            { name: 'sk3', age: 3}
+          ]
+        }
       }
     })
-
-    
-    let myBtn = document.getElementById('myBtn');
-    myBtn.addEventListener('click', () => {
-      alert(123);
-    }, false);
   </script>
 </body>
 
