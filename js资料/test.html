@@ -6,32 +6,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <!-- vue.js -->
   <script src="../vue.js"></script>
+  <!-- vue-router -->
+  <script src="../vue-router.js"></script>
 </head>
 
 <body>
 
   <div id="app">
-    <ul>
-      <li v-for="(item, index) in arr1">姓名: {{ item.name }}, 年龄： {{ item.age }}</li>
-      <li v-for="a in 15">{{a}}</li>
-    </ul>
+    <router-link to="">音乐</router-link>
+
+    <!-- 路由出口 -->
+    <router-view></router-view>
   </div>
 
   <script>
-    var vm = new Vue({
-      el: '#app',
-      data() {
-        return {
-          arr: [1, 2, 3],
-          arr1: [
-            { name: 'sky', age: 1},
-            { name: 'sky2', age: 2},
-            { name: 'sk3', age: 3}
-          ]
-        }
-      }
-    })
   </script>
 </body>
 

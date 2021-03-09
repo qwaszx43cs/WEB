@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <style>
+    .changeableFont {
+      font-size: 1em;
+    }
+  </style>
+
+  <div id="app">
+    <table>
+      <tr>
+        <th>1</th>
+      </tr>
+      <tr>
+        <td is="blog-component" :blog="blogs[0]"></td>
+      </tr>
+    </table>
+  </div>
+
+  <script src="../vue.js"></script>
+  <script>
+    Vue.component('blog-component', {
+      // props接收一个单独的blog对象prop
+      props: ['blog'],
+      template: `
+            <div>
+                <button @click="$emit('font-bigger', 0.1)">+</button>
+                <h3>{{ blog.title }}</h3>
+                <p v-html="blog.content"></p>
+                <p> {{ msg }} </p>
+            </div>`,
+      data() {
+        return {
+          msg: 123,
+        }
+      }
+    })
+
+    Vue.component('custom-input', {
+      props: ['value'],
+      template: `
+                <input 
+                    v-bind:value="inputText"
+                    v-on:input="$emit('input', $event.target.value)"
+                >`
+    })
+
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        // 博文内容对象
+        blogs: [{
+          id: 1,
+          title: 'VW',
+          content: 'volkswagen'
+        }, {
+          id: 2,
+          title: 'buick',
+          content: 'buick U.S.A'
+        }],
+        // 博文字体大小
+        blogFontSize: 1
+      },
+      methods: {
+        fontBigger(addSize) {
+          this.blogFontSize += addSize;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
