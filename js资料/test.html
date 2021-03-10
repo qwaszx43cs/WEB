@@ -13,54 +13,38 @@
 </head>
 
 <body>
-
   <div id="app">
-    <my-blog-article :blog="blogInfo" v-on:change-author="blogInfo.content = 1"></my-blog-article>
-    <test></test>
+    <my-blog :title="blogName" ref="myBlog"></my-blog>
+    <button @click="getBlogName()">获取博客名</button>
   </div>
 
-  <script>    
-
-    var componentA = {
-      template: `<div>
-        <h1>{{ blog.title }}</h1>
-        <h3>{{ blog.author }}</h3>
-        <p>{{ blog.content }}</p>
-        <button @click="$emit('change-author')">123</button>
-      </div>`,
-      props: {
-        'blog': Object
-      }
-    }
-
-    var componentB = {
-      template: `<h1>123</h1>`,
-      data() {
-        return {
-          msg: '123'
-        }
-      }
-    }
-    
+  <!-- component my-Blog -->
+  <template id="my-blog">
+    <h3>{{ title }}</h3>
+  </template>
+  <script>
     var vm = new Vue({
       el: '#app',
       data() {
         return {
-          blogInfo: {
-            title: 'My blog',
-            author: 'sky',
-            content: ' Lorem ipsum dolor sit amet.'
-          }
+          'blogName': 'Blog'
+        }
+      },
+      methods: {
+        getBlogName() {
+          console.log(this.$refs.myBlog.name);
         }
       },
       components: {
-        'my-blog-article' : componentA,
-        'test': componentB
+        'my-blog' : {
+          data() {
+            return { name: 'msg'}
+          },
+          template: '#my-blog',
+          props: { title: String }
+        }
       }
-    })
-
-    var vm2 = new Vue({})
-
+    });
   </script>
 </body>
 

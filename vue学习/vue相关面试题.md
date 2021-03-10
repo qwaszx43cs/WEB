@@ -31,7 +31,7 @@ vue生命周期共有八个阶段, 每个阶段都对应了一个生命周期函
 引申问题： 
 
 1. 第一次页面加载会触发哪几个钩子函数
-
+-
 答：beforeCreated, create, beforeMounted, mounted
 
 ### 2. 编写Vue组件继承的代码
@@ -102,10 +102,49 @@ vue生命周期共有八个阶段, 每个阶段都对应了一个生命周期函
 
 答：
 
-- 父子间通信：父 -> 子通过props, 子 -> 父 $on $emit
+- 父子间通信：
+  
+  1) 父 -> 子通过props, 子 -> 父 $on $emit
 
-  `$parent`,`$children`可获得父子组件实例，访问组件实例中的属性和方法(若存在父子组件)
+  2) `$parent`,`$children`可获得父子组件实例，访问组件实例中的属性和方法(若存在父子组件)。$children是一个数组，只有需要拿到所有子组件才会使用$children。实际开发中经常使用`$refs`
 
+  ```html
+  
+  <div id="app">
+    <my-blog :title="blogName" ref="myBlog"></my-blog>
+    <button @click="getBlogName()">获取博客名</button>
+  </div>
+
+  <!-- component my-Blog -->
+  <template id="my-blog">
+    <h3>{{ title }}</h3>
+  </template>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data() {
+        return {
+          'blogName': 'Blog'
+        }
+      },
+      methods: {
+        getBlogName() {
+          console.log(this.$refs.myBlog.name);
+        }
+      },
+      components: {
+        'my-blog' : {
+          data() {
+            return { name: 'msg'}
+          },
+          template: '#my-blog',
+          props: { title: String }
+        }
+      }
+    });
+  </script>  
+  
+  ```
 
 - 兄弟组件通信： 
 
@@ -214,3 +253,20 @@ vue生命周期共有八个阶段, 每个阶段都对应了一个生命周期函
 
 ```
 
+### 17. vuex是什么，怎么使用， 有哪些功能场景去使用？
+
+vuex是vue项目开发时使用的状态管理工具，用来管理和维护组件间复用的数据。
+
+成员列表有：
+
+(1) state：存放状态
+
+(2) mutation: 对state数据的方法的集合，包括数据的增删改
+
+(3) getters: 过滤state数据
+
+(4) actions: 异步操作数据
+
+(5) moudles：项目复杂时可以让每个模块拥有state,mutation, getters, actions
+
+### 18. 谈谈对MVVM的理解
