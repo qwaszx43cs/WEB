@@ -2,7 +2,11 @@
 
 2021/03/09号去了两家20人左右的小公司面试，笔试和面试都只关注vue水平。所以特别在此准备vue知识
 
-### 1. vue生命周期是什么？ 各个生命周期的阶段是什么？ 
+可参考的资料: 
+
+1. https://www.axihe.com/map/vue-focus.html
+
+### （解决）1. vue生命周期是什么？ 各个生命周期的阶段是什么？ 
 
 vue组件的创建到销毁的过程是vue生命周期。
 
@@ -24,6 +28,11 @@ vue生命周期共有八个阶段, 每个阶段都对应了一个生命周期函
 
 (8) `destoryed`
 
+引申问题： 
+
+1. 第一次页面加载会触发哪几个钩子函数
+
+答：beforeCreated, create, beforeMounted, mounted
 
 ### 2. 编写Vue组件继承的代码
 
@@ -89,52 +98,119 @@ vue生命周期共有八个阶段, 每个阶段都对应了一个生命周期函
 
     ```
 
-### 5. Vue组件的通信方式有哪些？简单说一下
+### （解决）5. Vue组件的通信方式有哪些？简单说一下
+
+答：
+
+- 父子间通信：父 -> 子通过props, 子 -> 父 $on $emit
+
+  `$parent`,`$children`可获得父子组件实例，访问组件实例中的属性和方法(若存在父子组件)
 
 
+- 兄弟组件通信： 
+
+  1) 子 -> 父，父 -> 子
+
+  2）eventbus
+
+  3) Vuex
+
+
+  引申: Prop的大小写问题，因为html的Attribute对大小写不敏感，所以在组件中的驼峰式命名的prop转换为等价的短横线分隔命名
+
+  ```javascript
+
+    var componentA = {
+    template: `<h1>{{ blogTitle }}</h1>`,
+    props: {
+      'blogTitle': String // 驼峰式命名blogTitle
+    }
+  }
+  
+  ```
+
+  ```html
+  
+  <my-blog-title blog-title="hello!"></my-blog-title>
+  
+  ```
+  
 ### （解决）6. v-if和v-show的相同和不同点
 
-    相同点: `v-if`和`v-show`都是条件渲染内容
+  相同点: `v-if`和`v-show`都是条件渲染内容
 
-    不同点： 
+  不同点： 
 
-    (1) v-if有更高的切换开销，总是销毁和重建节点;
+  (1) v-if有更高的切换开销，总是销毁和重建节点;
 
-    (2) v-show有更高的启动开销，即使`v-show='false'`也会渲染元素，只是单纯的切换CSS(display="none")
+  (2) v-show有更高的启动开销，即使`v-show='false'`也会渲染元素，只是单纯的切换CSS(display="none")
 
 ### （解决）7. 路由之间如何跳转，如何传参
 
-    (1) router-link
-        
-        不带参数
-        <router-link :to="{name: '组件名'}"></router-link>
-        <router-link :to="{path: '/path'}"></router-link>
+  (1) 声明式跳转router-link
+      
+      不带参数
+      <router-link :to="{name: '组件名'}"></router-link>
+      <router-link :to="{path: '/path'}"></router-link>
 
-        带参数
-        <router-link :to="{name: '组件名', params: {id: 1}}">
+      带参数
+      <router-link :to="{name: '组件名', params: {id: 1}}">
 
-    (2) 编程式导航 **params传参只能用name**
+  (2) 编程式导航 **params传参只能用name**
 
-        ```javascript
+      ```javascript
 
-        // 不带参数 
-        this.$router.push('/path'); 
-        this.$router.push({name: '组件名'}); 
-        this.$router.push({path: '/path'}); 
-        
-        // 带参数
-        this.$router.push({
-            name: '组件名',
-            params: {
-                id: 1
-            }})
-        ```
+      // 不带参数 
+      this.$router.push('/path'); 
+      this.$router.push({name: '组件名'}); 
+      this.$router.push({path: '/path'}); 
+      
+      // 带参数
+      this.$router.push({
+          name: '组件名',
+          params: {
+              id: 1
+          }})
+      ```
 
 
 ### 8. 写一个axios的详细请求配置(post, get)
 
 
-### 9. vue中$route和$router的区别
+### （解决）9. vue中$route和$router的区别
 
+答: `$route`是"路由参数对象"，包含了name, params, path, query等。而`$router`是路由实例对象，包含了路由跳转，钩子函数等方法
 
 ### 10. 绑定key
+
+### （解决）11. 为什么v-for和v-if不能同时使用？
+
+  因为`v-for`的优先级较高，所以连用的话会给每个元素都添加`v-if`,会造成性能问题
+
+### （解决）12. vue.js如何只让style只在当前组件起作用？
+
+答： `<style>` 改成 `<style scoped>` 
+
+### （解决）13. vue.js中keep-alive的作用是什么？
+
+答： 包裹动态组件时，会缓存不活动的组件实例，主要用于保留动态组件状态或重新渲染
+
+### （解决）14. vue.js中使用插件的方法
+
+答: import .. from ...语法, Vue.ues(plugin)使用插件
+
+### （解决）15. vue.js中ajax请求放在哪个生命周期中
+
+答: `mounted`生命周期中DOM已经渲染出来了，可以操作DOM所以放在`mounted`中
+
+### （解决）16. vue.js中v-model的实现原理，如何自定义v-model
+
+答: `v-model`是`value`和`input方法`的语法糖
+
+```html
+  <!-- 两者一样 -->
+  <input @v-model="msg">
+  <input :value="msg" @input="msg=$event.target.value">
+
+```
+
